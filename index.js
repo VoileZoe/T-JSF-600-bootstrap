@@ -19,9 +19,11 @@ function replaceNameInHtml(html, name) {
 
 const server = http.createServer(async (req, res) => {
     console.log('Client connected');
+    console.log(req);
 
     if (req.method === 'POST' && req.url === '/index.html') {
         let body = '';
+        
         req.on('data', chunk => {
             body += chunk.toString(); // Convert Buffer to string
         });
