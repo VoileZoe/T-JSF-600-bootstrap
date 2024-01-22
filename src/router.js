@@ -12,6 +12,9 @@ module.exports = function route(req, res) {
         case '/about':
             pages.about(req, res);
             break;
+        case '/form':
+            pages.form(req, res);
+            break;
         default:
             res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.end('404 error: Page not found.');
