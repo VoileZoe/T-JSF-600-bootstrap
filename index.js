@@ -3,6 +3,8 @@ const url = require('url');
 const fs = require('fs').promises;
 const querystring = require('querystring');
 const router = require('./src/router');
+const net = require('net'); 
+
 
 async function readHtmlFile() {
     try {
@@ -66,6 +68,8 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
+
+
 server.on('connection', () => {
     console.log('Client connected');
 });
@@ -74,6 +78,43 @@ server.on('close', () => {
     console.log('Client disconnected');
 });
 
+
+
 server.listen(3000, () => {
     console.log(`Server is running on http://localhost:${3000}`);
 });
+
+server.on('connection', (socket) => {
+
+    socket.on('data', (data) => {
+  
+      if(data.toString() === 'Hello from test client') {
+  
+        console.log('Test client connected');
+      
+      }
+  
+    });
+});
+
+// Création du serveur TCP
+const tcpServer = net.createServer((socket) => {
+    console.log('TCP Client connected');
+  
+    socket.on('data', (data) => {
+      console.log(`Received: ${data}`);
+    });
+  
+    socket.on('end', () => {
+      console.log('TCP Client disconnected');
+    });
+  
+    socket.on('error', (err) => {
+      console.log(`Server error: ${err.message}`);
+    });
+  });
+  
+  tcpServer.listen(3001, 'localhost', () => { 
+    console.log('TCP Server is running on http://localhost:3001');
+  });
+

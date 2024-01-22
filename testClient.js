@@ -1,3 +1,6 @@
-const client = require('./src/client');
+const client = require('./src/client.js');
 
-client.connect('localhost', 3000);
+// Now you can use the client object
+client.on('data', (data) => {
+  console.log(`TestClient Received: ${data}`);
+});
